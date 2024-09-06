@@ -189,5 +189,7 @@ SHA-256 ensures data integrity in site-to-site VPNs by verifying data hasn't bee
 #Protocol: ESP (Encapsulating Security Payload)
 ESP creates the secure tunnel in IPsec VPNs, protecting data as it travels between sites.
 
+LOCAL AND REMOTE NETRWOK
+
 
 
