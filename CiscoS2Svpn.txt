@@ -1,0 +1,178 @@
+TINY LINUX - YVM 
+VLADAN TINY LINUX
+
+CSR 1000v
+
+***************************************************
+THEORY 0n VPN - Vritual Private network it consist of 
+
+VPN stands for "Virtual Private Network" and describes the opportunity to establish a protected network connection when using public networks. VPNs encrypt your internet traffic
+
+Encyption-  is used to protect the data that travels between your device and the VPN server. This encryption ensures that even if someone intercepts the data, they cannot decipher it without the appropriate decryption key. Common encryption protocols used in VPNs include AES (Advanced Encryption Standard) and SSL/TLS (Secure Sockets Layer/Transport Layer Security).
+AES (Advanced Encryption Standard) and SSL/TLS (Secure Sockets Layer/Transport Layer Security).
+Most common encryption protocol used IPSEC( Internet Protocol Security) 
+
+Symmetric encryption involves using a single key to encrypt and decrypt data, 
+https://www.devglan.com/online-tools/aes-encryption-decryption
+-Advanced Encryption Standard
+
+while asymmetric encryption uses two keys - one public and one private - to encrypt and decrypt data. (Example Payslip) - 
+*https://www.devglan.com/online-tools/rsa-encryption-decryption
+-Rivest, Shamir, Adleman.
+
+Hash- Hashes are used in VPNs for various purposes, such as verifying data integrity When data is hashed and sent over a VPN, the recipient can verify that it hasn't been tampered with during transit. (xorbin sha 256)
+
+tunneling- tunneling ensures that your data is protected and secure while it's traveling across the internet, making it much harder for anyone to see or tamper with it. 
+**************************************************
+
+VMWARE
+
+disable dhcp on VMWARE vmnet 2-4 network editor
+
+CSR 1000v
+
+VPNJP
+
+nat
+vmnet 2
+vmnet 3
+
+VPNPH
+
+nat
+vmnet 2
+vmnet 4
+***************************************************
+YVM.OVA (Vladan Tiny Linux)
+
+BLDGJP
+512 mb
+vmnet3
+
+BLDGPH
+512 mb
+vmnet4
+****************************************************
+VPNJP
+
+enable
+conf t
+int gi 2
+ip add 192.168.102.10 255.255.255.0
+no shut
+
+VPNPH
+
+enable
+conf t
+int gi 2
+ip add 192.168.102.20 255.255.255.0
+no shut
+
+THEN OPEN SECURE CRT
+******************************************************
+@VPNJP:
+config T
+no logging console
+no ip domain lookup
+ip route 0.0.0.0 0.0.0.0 200.0.0.20
+int gi 1
+ip add 200.0.0.10 255.255.255.0
+no shut
+int gi3
+ip add 10.10.10.1 255.255.255.0
+no shut
+
+@VPNphp:
+config T
+no logging console
+no ip domain lookup
+ip route 0.0.0.0 0.0.0.0 200.0.0.10
+int gi 1
+ip add 200.0.0.20 255.255.255.0
+no shut
+int gi3
+ip add 10.20.20.1 255.255.255.0
+no shut
+
+***********************************************************
+DOWNLOAD VLADAN TINY LINUX
+***********************************************************
+
+YVM- BLDGJP
+
+sudo ifconfig eth0 10.10.10.10 netmask 255.255.255.0 up
+sudo route add default gw 10.10.10.1
+
+ping 10.10.10.1
+ping 10.20.20.20
+traceroute 10.20.20.20 ---> sa 200.0.0.0 nadaan
+
+**************************************************************
+YVM- BLDGPH
+
+sudo ifconfig eth0 10.20.20.20 netmask 255.255.255.0 up
+sudo route add default gw 10.20.20.1
+
+ping 10.20.20.1
+ping 10.10.10.10
+traceroute 10.10.10.10 ---> sa 200.0.0.0 nadaan
+
+*************************************************************
+OPEN GUI OPEN -FIRE FOX
+
+JP
+192.168.102.10
+
+PH
+192.168.102.20
+
+admin
+password
+
+***********************************************************
+Configuration -> VPN
+
+JAPAN GUI
+
+Tunnel ip: 172.16.30.10
+Tunnel Subnet Mask: 255.255.255.0
+Source Interface : GigabitEthernet 1
+Remote Peer IP: 200.0.0.20
+Pre-Shared key: 88888888
+Description: Going to PH
+
+Remote subnets : 10.20.20.0 255.255.255.0
+
+PH GUI
+
+Tunnel ip: 172.16.30.20
+Tunnel Subnet Mask: 255.255.255.0
+Source Interface : GigabitEthernet 1
+Remote Peer IP: 200.0.0.10
+Pre-Shared key: 88888888
+Description: Going to PH
+
+Remote subnets : 10.10.10.0 255.255.255.0
+
+
+**************************************************************
+YVM- BLDGJP
+
+ping 10.10.10.1
+ping 10.20.20.20
+traceroute 10.20.20.20 ---> sa 172.16 dapat nadaan sa tunnel
+
+YVM- BLDGPH
+
+ping 10.20.20.1
+ping 10.10.10.10
+traceroute 10.10.10.10 ---> sa 172.16 dapat nadaan sa tunnel
+
+sh ip int br sa VPNJP & PH
+**************************************************************
+int tu 1
+no shut
+
+**************
+xorbin sha 256

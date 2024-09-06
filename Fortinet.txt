@@ -1,0 +1,145 @@
+https://coda.io/@jplozer/installing-fortinet-firewall-on-vmware-and-how-to-use-it
+
+
+
+DEPLOY TO VMWARE
+Name: FORTINET-NGFW1
+
+Network Adapters
+NAT
+vmnet 5
+
+POWER ON THE VMWARE
+
+********************************************************
+#LOGIN
+username: admin
+password: "PRESS ENTER"
+type new password
+confirm password
+
+#CHECK LICENSE
+get systemstatus
+
+exec factoryreset
+Then type y to Confirm.
+
+********************************************************
+#CHECK THE IP ADDRESS OF PORT 1
+get system interface physical
+exec ping 8.8.8.8
+
+********************************************************
+#IF YOU WANT TO SET STATIC IP ADDRESS
+config system interface
+edit port1
+set mode static
+set ip 192.168._._/24
+set allowaccess http https ssh telnet ping
+end
+
+********************************************************
+#OPEN BROWSER 
+https://192.168.108.0
+
+CLICK evaluation then login to your support.fortinet account
+********************************************************
+#STATIC ROUTE
+Network -> Static Routes
+
+Gateway Address: 192.168.108.2
+Interface WAN (Port1)
+
+
+********************************************************
+#EDIT PORT 2 FOR LAN and Put alias to port1 ( WAN )
+Network -> Interfaces 
+
+Edit Port 2
+Alias: LAN
+IP/Netmask: 10.M.10.2/24
+CHECK:
+IPv4
+ SCIM
+ HTTPS
+ PING
+ SSH
+ SNMP
+ FTM
+ RADIUS Accounting
+ Security Fabric Connection
+
+#ENABLE DHCP SERVER
+Address Range: 10.11.10.100-10.11.10.200
+
+********************************************************
+#GO TO YOUR WINDOWS SERVER
+Disable and Enable the Network
+The windows should get a ip of 10.11.10.100 /24
+
+********************************************************
+#GIVE INTERNET TO YOUR WINDOWS SERVER
+
+Policy & Objects -> Firewall Policy
+
+Name: Internet Access to LAN
+Incoming Interface: port2 (LAN)
+Outgoing Interface: port1 (WAN)
+Source: all
+Destination: all
+Schedule: always
+Service: ALL
+Action: ✔ ACCEPT
+NAT: Enable
+
+Others are default. Click OK to save changes.
+
+#YOUR WINDOW SERVER SHOULD HAVE INTERNET ACCESS.
+
+********************************************************
+#WEBFILTER
+Security Profiles -> Web Filter
+
+Name: No-YT
+Enforce 'Safe Search' on Google, Yahoo!, Bing, Yandex (ENABLE)
+Block invalid URLs (ENABLE)
+Static URL Filter (ENABLE)
+Create New
+URL: *twitter.com
+TYPE: Wildcard
+ACTION: BLOCK
+STATUS: ENABLE
+
+
+#Policy & Objects -> Firewall Policy
+GO to Policy enable the WEBFilter
+
+********************************************************
+#APPLICATION CONTROL
+Security Profiles -> Application Control
+
+Name: Application1
+Block Email
+
+#Policy & Objects -> Firewall Policy
+GO to Policy enable the Application Control
+
+********************************************************
+#USER AUTHENTICATION (Basic Setup)
+User & Authentication -> User Definition
+
+Create new local user
+name: your name
+password: C1sc0123
+
+#Policy & Objects -> Firewall Policy
+GO to Policy add user 
+
+
+
+
+
+
+
+
+
