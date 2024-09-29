@@ -177,17 +177,17 @@ no shut
 **************
 xorbin sha 256
 
-#Authentication Method: PSK (Pre-Shared Key)
-A secret password shared between both sites, used to authenticate the VPN connection.
+#Hash Algorithm: SHA-256
+SHA-256 ensures data integrity in site-to-site VPNs by verifying data hasn't been altered.
 
 #Encryption Algorithm: AES-256
 AES-256 provides strong encryption for securing site-to-site VPNs, especially in IPsec.
 
-#Hash Algorithm: SHA-256
-SHA-256 ensures data integrity in site-to-site VPNs by verifying data hasn't been altered.
-
 #Protocol: ESP (Encapsulating Security Payload)
 ESP creates the secure tunnel in IPsec VPNs, protecting data as it travels between sites.
+
+#Authentication Method: PSK (Pre-Shared Key)
+A secret password shared between both sites, used to authenticate the VPN connection.
 
 LOCAL AND REMOTE NETRWOK
 G-DRIVE LINK
