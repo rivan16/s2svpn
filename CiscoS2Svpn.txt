@@ -190,6 +190,7 @@ SHA-256 ensures data integrity in site-to-site VPNs by verifying data hasn't bee
 ESP creates the secure tunnel in IPsec VPNs, protecting data as it travels between sites.
 
 LOCAL AND REMOTE NETRWOK
-
+G-DRIVE LINK
+https://drive.google.com/drive/folders/1-b9a0WzKXwc_-k970MOvpI26nlr0tk9b?usp=sharing
 
 
