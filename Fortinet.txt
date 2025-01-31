@@ -1,6 +1,15 @@
 https://coda.io/@jplozer/installing-fortinet-firewall-on-vmware-and-how-to-use-it
 
+S2S VPN to CLASSMATE
+Connect on the same wifi / network
+CHECK VMWARE IF NAKA BRIDGE TO WIFI - Edit - Virtual Network 
 
+FORTINET
+VMWARE
+vmnet0 - Bridge - WAN
+vmnet5 - LAN
+
+*******************************************************
 
 DEPLOY TO VMWARE
 Name: FORTINET-NGFW1
@@ -134,6 +143,14 @@ password: C1sc0123
 
 #Policy & Objects -> Firewall Policy
 GO to Policy add user 
+
+*****************************************************
+S2S VPN to CLASSMATE
+Connect on the same wifi / network
+
+VMWARE
+vmnet0 - Bridge - WAN
+vmnet5 - LAN
 
 
 
