@@ -1,4 +1,6 @@
 https://coda.io/@jplozer/installing-fortinet-firewall-on-vmware-and-how-to-use-it
+New-NetFirewallRule -DisplayName "Allow ICMPv6-In" -Protocol ICMPv6 -IcmpType 128 -Direction Inbound -Action Allow
+
 
 S2S VPN to CLASSMATE
 Connect on the same wifi / network
